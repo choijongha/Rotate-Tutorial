@@ -4,25 +4,28 @@ public class PlayerRotate : MonoBehaviour
 {
     public Transform target;
     public bool onLookRotation;
-    public bool angle;
+    public bool onAngle;
     void Update()
     {
         GetKeyDown();
-        if (onLookRotation)
+        if(onLookRotation)
         {
             LookRotation();
+        }else if (onAngle)
+        {
+            Angle();
         }
 
     }
     public void GetKeyDown()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !onLookRotation)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            onLookRotation = true;
+            if(onLookRotation ? onLookRotation = false : onLookRotation = true);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1) && onLookRotation)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            onLookRotation = false;
+            if(onAngle ? onAngle = false : onAngle = true) ;
         }
     }
     public void LookRotation()
@@ -35,6 +38,7 @@ public class PlayerRotate : MonoBehaviour
     public void Angle()
     {
         float angle = Quaternion.Angle(transform.rotation, target.rotation);
+        Debug.Log(angle);
     }
 }
 
