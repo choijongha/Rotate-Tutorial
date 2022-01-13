@@ -4,14 +4,17 @@ public class PlayerRotate : MonoBehaviour
 {
     [SerializeField] GameObject playerYAxisLine;
     [SerializeField] GameObject targetYAxisLine;
-
     public Transform target;
-    public bool onLookRotation;
-    public bool onAngle;
     public Vector3 playerRotation;
     public Vector3 targetRotation;
+    public Vector3 quaternionAndEulerAngle;
+
+    public bool onLookRotation { get; private set; }
+    private bool onAngle;
+    private bool onEluerQuaternion;
     private void Start()
     {
+        
     }
     void Update()
     {
@@ -22,6 +25,9 @@ public class PlayerRotate : MonoBehaviour
         }else if (onAngle)
         {
             Angle();
+        }else if (onEluerQuaternion)
+        {
+            QuaternionAndEulerAngle();
         }
 
     }
@@ -34,6 +40,9 @@ public class PlayerRotate : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             if(onAngle ? onAngle = false : onAngle = true) ;
+        }if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (onEluerQuaternion ? onEluerQuaternion = false : onEluerQuaternion = true) ;
         }
     }
     public void LookRotation()
@@ -55,6 +64,13 @@ public class PlayerRotate : MonoBehaviour
         transform.rotation = playerRotationQuaternion;
         target.rotation = targetRotationQuaternion;
         Debug.Log(angle);
+    }
+    public void QuaternionAndEulerAngle()
+    {
+        Quaternion rotationQuaternion = Quaternion.Euler(quaternionAndEulerAngle);
+        Debug.Log(rotationQuaternion);
+        Vector3 rotationVector = QuaternionToEuler.FromQ2(rotationQuaternion);
+        Debug.Log(rotationVector);
     }
 }
 
