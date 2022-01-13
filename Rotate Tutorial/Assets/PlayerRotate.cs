@@ -2,9 +2,17 @@ using UnityEngine;
 
 public class PlayerRotate : MonoBehaviour
 {
+    [SerializeField] GameObject playerYAxisLine;
+    [SerializeField] GameObject targetYAxisLine;
+
     public Transform target;
     public bool onLookRotation;
     public bool onAngle;
+    public Vector3 playerRotation;
+    public Vector3 targetRotation;
+    private void Start()
+    {
+    }
     void Update()
     {
         GetKeyDown();
@@ -30,6 +38,8 @@ public class PlayerRotate : MonoBehaviour
     }
     public void LookRotation()
     {
+        playerYAxisLine.SetActive(false);
+        targetYAxisLine.SetActive(false);
         Vector3 relativePos = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativePos);
         transform.rotation = rotation;
@@ -37,7 +47,13 @@ public class PlayerRotate : MonoBehaviour
     }
     public void Angle()
     {
-        float angle = Quaternion.Angle(transform.rotation, target.rotation);
+        playerYAxisLine.SetActive(true);
+        targetYAxisLine.SetActive(true);
+        Quaternion playerRotationQuaternion = Quaternion.Euler(playerRotation);
+        Quaternion targetRotationQuaternion = Quaternion.Euler(targetRotation);
+        float angle = Quaternion.Angle(playerRotationQuaternion, targetRotationQuaternion);
+        transform.rotation = playerRotationQuaternion;
+        target.rotation = targetRotationQuaternion;
         Debug.Log(angle);
     }
 }

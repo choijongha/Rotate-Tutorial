@@ -508,7 +508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1461559810
 Transform:
   m_ObjectHideFlags: 0
@@ -743,7 +743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1969427131
 Transform:
   m_ObjectHideFlags: 0
@@ -852,9 +852,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431a18435202b4842a282826cfc747e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerYAxisLine: {fileID: 1969427130}
+  targetYAxisLine: {fileID: 1461559809}
   target: {fileID: 1301866657}
   onLookRotation: 0
   onAngle: 0
+  playerRotation: {x: 0, y: 0, z: 0}
+  targetRotation: {x: 0, y: 0, z: 90}
 --- !u!136 &2114051762
 CapsuleCollider:
   m_ObjectHideFlags: 0
