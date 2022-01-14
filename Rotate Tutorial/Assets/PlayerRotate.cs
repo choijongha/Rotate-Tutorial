@@ -4,18 +4,22 @@ public class PlayerRotate : MonoBehaviour
 {
     [SerializeField] GameObject playerYAxisLine;
     [SerializeField] GameObject targetYAxisLine;
+    [SerializeField] Camera playerCamera;
     public Transform target;
     public Vector3 playerRotation;
     public Vector3 targetRotation;
     public Vector3 quaternionAndEulerAngle;
-
+    public float QuaternionSlerpSpeed;
     public bool onLookRotation { get; private set; }
     private bool onAngle;
     private bool onEluerQuaternion;
+    private bool onSlerp;
+
+    float toRotationY;
     private void Start()
     {
-        
     }
+    
     void Update()
     {
         GetKeyDown();
@@ -28,6 +32,9 @@ public class PlayerRotate : MonoBehaviour
         }else if (onEluerQuaternion)
         {
             QuaternionAndEulerAngle();
+        }else if (onSlerp)
+        {
+            Slerp();
         }
 
     }
@@ -43,6 +50,9 @@ public class PlayerRotate : MonoBehaviour
         }if(Input.GetKeyDown(KeyCode.Alpha3))
         {
             if (onEluerQuaternion ? onEluerQuaternion = false : onEluerQuaternion = true) ;
+        }if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            if (onSlerp ? onSlerp = false : onSlerp = true) ;
         }
     }
     public void LookRotation()
@@ -72,5 +82,16 @@ public class PlayerRotate : MonoBehaviour
         Vector3 rotationVector = QuaternionToEuler.FromQ2(rotationQuaternion);
         Debug.Log(rotationVector);
     }
+    public void Slerp()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        Vector3 playerPosition = transform.position;
+        mousePosition.z = playerPosition.y + playerCamera.transform.position.y;
+        Vector3 target = playerCamera.ScreenToWorldPoint(mousePosition);
+        Vector3 dir = target - playerPosition;
+        Quaternion rot = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, QuaternionSlerpSpeed);
+    }
+
 }
 
