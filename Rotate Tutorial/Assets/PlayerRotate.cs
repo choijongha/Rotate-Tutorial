@@ -10,10 +10,12 @@ public class PlayerRotate : MonoBehaviour
     public Vector3 targetRotation;
     public Vector3 quaternionAndEulerAngle;
     public float QuaternionSlerpSpeed;
+    public Vector3 quternionFromtoRotation;
     public bool onLookRotation { get; private set; }
     private bool onAngle;
     private bool onEluerQuaternion;
     private bool onSlerp;
+    private bool onFromtoRotation;
 
     float toRotationY;
     private void Start()
@@ -35,7 +37,11 @@ public class PlayerRotate : MonoBehaviour
         }else if (onSlerp)
         {
             Slerp();
+        }else if (onFromtoRotation)
+        {
+            FromToRotation();
         }
+
 
     }
     public void GetKeyDown()
@@ -53,6 +59,10 @@ public class PlayerRotate : MonoBehaviour
         }if(Input.GetKeyDown(KeyCode.Alpha4))
         {
             if (onSlerp ? onSlerp = false : onSlerp = true) ;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            if (onFromtoRotation ? onFromtoRotation = false : onFromtoRotation = true) ;
         }
     }
     public void LookRotation()
@@ -91,6 +101,12 @@ public class PlayerRotate : MonoBehaviour
         Vector3 dir = target - playerPosition;
         Quaternion rot = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, QuaternionSlerpSpeed);
+    }
+    public void FromToRotation()
+    {
+        
+        transform.rotation = Quaternion.FromToRotation(Vector3.forward, quternionFromtoRotation);
+
     }
 
 }
